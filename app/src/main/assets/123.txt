@@ -1,0 +1,12 @@
+//        java.io.File file = new java.io.File("/sdcard/Test/123.txt");
+//        FileUtils.createOrExistsFile(file);
+//        try {
+//            FileUtils.writeFileFromIS(file, getV().getResources().getAssets().open("123.txt"), true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(file.length());
+//        RequestBody requestFile =
+//                RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+//        MultipartBody.Part body =
+//                MultipartBody.Part.createFormData("aFile", file.getName(), requestFile);
