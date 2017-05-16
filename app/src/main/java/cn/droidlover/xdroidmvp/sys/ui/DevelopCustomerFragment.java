@@ -3,7 +3,6 @@ package cn.droidlover.xdroidmvp.sys.ui;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.rey.material.app.Dialog;
@@ -14,7 +13,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
-import cn.droidlover.xdroidmvp.cache.SharedPref;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
@@ -22,8 +20,6 @@ import cn.droidlover.xdroidmvp.sys.adapter.DevelopCustomerFragmentAdapter;
 import cn.droidlover.xdroidmvp.sys.model.DevelopCustomerModel;
 import cn.droidlover.xdroidmvp.sys.model.common.Constent;
 import cn.droidlover.xdroidmvp.sys.present.PDevelopCustomer;
-import cn.droidlover.xdroidmvp.sys.widget.LoadingDialog;
-import cn.droidlover.xdroidmvp.sys.widget.StateView;
 import cn.droidlover.xdroidmvp.sys.widget.XCSlideView;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
@@ -40,6 +36,8 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
 
     XCSlideView mSlideViewRight;//搜索侧滑框
     int mScreenWidth = 0;//屏幕宽度
+
+    String search = "";//查询json
 
     /**
      * 获得adapter
@@ -148,7 +146,7 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
 
     public void loadData(final Integer page) {
         if (Constent.ONLINE) {
-            getP().loadData(page);
+            getP().loadData(page, search);
         } else {
             getP().loadNativeData(page);
         }

@@ -1,6 +1,5 @@
 package cn.droidlover.xdroidmvp.sys.present;
 
-import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.litesuits.orm.db.assit.QueryBuilder;
 
@@ -12,7 +11,6 @@ import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
 import cn.droidlover.xdroidmvp.sys.db.OrmLiteManager;
 import cn.droidlover.xdroidmvp.sys.model.DevelopCustomerModel;
-import cn.droidlover.xdroidmvp.sys.model.UserModel;
 import cn.droidlover.xdroidmvp.sys.model.common.Constent;
 import cn.droidlover.xdroidmvp.sys.net.Api;
 import cn.droidlover.xdroidmvp.sys.ui.DevelopCustomerFragment;
@@ -23,8 +21,8 @@ import cn.droidlover.xdroidmvp.sys.widget.LoadingDialog;
  */
 
 public class PDevelopCustomer extends XPresent<DevelopCustomerFragment> {
-    public void loadData(final int page) {
-        Api.getDevelopCustomerService().query(page)
+    public void loadData(final int page, final String search) {
+        Api.getDevelopCustomerService().query(page, search)
                 .compose(XApi.<DevelopCustomerModel>getApiTransformer())
                 .compose(XApi.<DevelopCustomerModel>getScheduler())
                 .compose(getV().<DevelopCustomerModel>bindToLifecycle())
