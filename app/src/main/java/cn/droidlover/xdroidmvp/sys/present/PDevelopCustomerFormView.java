@@ -51,8 +51,7 @@ public class PDevelopCustomerFormView extends XPresent<DevelopCustomerFormViewAc
      * @param id
      */
     public void queryNativeOne(final String id) {
-        DevelopCustomerModel.DevelopCustomer data = OrmLiteManager.getInstance(getV())
-                .getLiteOrm(getV()).queryById(id, DevelopCustomerModel.DevelopCustomer.class);
+        DevelopCustomerModel.DevelopCustomer data = OrmLiteManager.queryById(getV(), DevelopCustomerModel.DevelopCustomer.class, id);
         if (null == data) {
             ToastUtils.showShortToast("未查询到数据");
         } else {

@@ -17,7 +17,7 @@ import retrofit2.http.QueryMap;
 public interface DevelopCustomerService {
 
     @GET("frontapi/developCustomer/queryList")
-    Flowable<DevelopCustomerModel> query(@Query("pageNo") int pageNum, @Query("search") String search);
+    Flowable<DevelopCustomerModel> query(@Query("pageNo") int pageNum, @QueryMap(encoded = true) Map<String, Object> conditionMap);
 
     @GET("frontapi/developCustomer/queryOne")
     Flowable<DevelopCustomerModel> queryOne(@Query("customerNo") String id);

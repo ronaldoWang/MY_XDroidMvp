@@ -6,14 +6,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.SimpleDialog;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +31,7 @@ import cn.droidlover.xdroidmvp.sys.adapter.DevelopCustomerFragmentAdapter;
 import cn.droidlover.xdroidmvp.sys.model.DevelopCustomerModel;
 import cn.droidlover.xdroidmvp.sys.model.common.Constent;
 import cn.droidlover.xdroidmvp.sys.present.PDevelopCustomer1;
+import cn.droidlover.xdroidmvp.sys.widget.LoadingDialog;
 import cn.droidlover.xdroidmvp.sys.widget.XCSlideView;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
@@ -38,10 +44,13 @@ public class DevelopCustomerActivity extends XActivity<PDevelopCustomer1> {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    EditText et_customerName;
+    EditText et_mobilePhone;
+
+    Map<String, Object> conditionMap = new HashMap<>();
+
     DevelopCustomerFragmentAdapter adapter;
     XCSlideView mSlideViewLeft;//搜索侧滑框
-
-    String search = "";//查询json
 
     @Override
     public void initView(Bundle bundle) {
@@ -51,7 +60,24 @@ public class DevelopCustomerActivity extends XActivity<PDevelopCustomer1> {
         mSlideViewLeft = XCSlideView.create(this, XCSlideView.Positon.LEFT);
         mSlideViewLeft.setMenuView(this, menuViewLeft);
         mSlideViewLeft.setMenuWidth(mScreenWidth * 7 / 9);
-        EditText iv = ButterKnife.findById(menuViewLeft, R.id.edit_customer_customerName);
+        et_customerName = ButterKnife.findById(menuViewLeft, R.id.edit_customer_customerName);
+        et_mobilePhone = ButterKnife.findById(menuViewLeft, R.id.edit_customer_mobilePhone);
+
+
+        BootstrapButton btn_search = ButterKnife.findById(menuViewLeft, R.id.btn_search);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doSearch();
+            }
+        });
+        BootstrapButton btn_reset = ButterKnife.findById(menuViewLeft, R.id.btn_reset);
+        btn_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doReset();
+            }
+        });
 
         //加载Toolbar
         setSupportActionBar(toolbar);
@@ -100,7 +126,11 @@ public class DevelopCustomerActivity extends XActivity<PDevelopCustomer1> {
                         @Override
                         public void onPositiveActionClicked(DialogFragment fragment) {
                             super.onPositiveActionClicked(fragment);
-                            getP().delete(model.getCustomerNo());
+                            if (Constent.ONLINE) {
+                                getP().delete(model.getCustomerNo());
+                            } else {
+                                getP().deleteNativeData(model.getId());
+                            }
                         }
 
                         @Override
@@ -169,10 +199,34 @@ public class DevelopCustomerActivity extends XActivity<PDevelopCustomer1> {
 
     public void loadData(final Integer page) {
         if (Constent.ONLINE) {
-            getP().loadData(page, search);
+            getP().loadData(page, conditionMap);
         } else {
-            getP().loadNativeData(page, search);
+            getP().loadNativeData(page, conditionMap);
         }
+    }
+
+    /**
+     * 重置
+     */
+    private void doReset() {
+        mSlideViewLeft.dismiss();
+        conditionMap.clear();
+        et_customerName.getText().clear();
+        et_mobilePhone.getText().clear();
+    }
+
+    /**
+     * 查询
+     */
+    private void doSearch() {
+        mSlideViewLeft.dismiss();
+        if (!StringUtils.isTrimEmpty(et_customerName.getText().toString())) {
+            conditionMap.put("searchcondition_customerName_string_like", et_customerName.getText().toString());
+        }
+        if (!StringUtils.isTrimEmpty(et_mobilePhone.getText().toString())) {
+            conditionMap.put("searchcondition_mobilePhone_string_like", et_mobilePhone.getText().toString());
+        }
+        loadData(1);
     }
 
     @Override
@@ -189,31 +243,6 @@ public class DevelopCustomerActivity extends XActivity<PDevelopCustomer1> {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
-    }
-
-    @OnClick({R.id.btn_search, R.id.btn_reset})
-    public void click(View v) {
-        switch (v.getId()) {
-            case R.id.btn_search:
-                doSearch();
-                break;
-            case R.id.btn_reset:
-                doReset();
-                break;
-        }
-    }
-
-    /**
-     * 重置
-     */
-    private void doReset() {
-    }
-
-    /**
-     * 查询
-     */
-    private void doSearch() {
-
     }
 
     @Override

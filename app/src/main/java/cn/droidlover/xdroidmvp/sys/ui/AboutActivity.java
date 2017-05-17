@@ -20,7 +20,6 @@ public class AboutActivity extends XActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-
     @Override
     public void initView(Bundle bundle) {
         initToolbar();

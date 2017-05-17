@@ -8,7 +8,6 @@ import android.view.View;
 import com.beardedhen.androidbootstrap.BootstrapLabel;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.cache.SharedPref;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
