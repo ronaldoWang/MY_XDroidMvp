@@ -1,7 +1,9 @@
 package cn.droidlover.xdroidmvp.sys.present;
 
 import com.blankj.utilcode.util.ToastUtils;
+
 import java.util.Map;
+
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
@@ -39,12 +41,16 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
 
                     @Override
                     public void onNext(DevelopCustomerModel developCustomerModel) {
-                        LoadingDialog.cancelDialogForLoading();
                         if (developCustomerModel.isSuccess()) {
                             getV().showData(page, developCustomerModel.getData());
                         } else {
                             ToastUtils.showShortToast(developCustomerModel.getMessage());
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LoadingDialog.cancelDialogForLoading();
                     }
                 });
     }
@@ -69,12 +75,16 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
 
                     @Override
                     public void onNext(DevelopCustomerModel developCustomerModel) {
-                        LoadingDialog.cancelDialogForLoading();
                         if (developCustomerModel.isSuccess()) {
                             getV().loadData(1);
                         } else {
                             ToastUtils.showShortToast(developCustomerModel.getMessage());
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LoadingDialog.cancelDialogForLoading();
                     }
                 });
     }

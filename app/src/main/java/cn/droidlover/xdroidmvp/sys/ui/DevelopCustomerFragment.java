@@ -9,7 +9,9 @@ import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.SimpleDialog;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -37,7 +39,7 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
     XCSlideView mSlideViewRight;//搜索侧滑框
     int mScreenWidth = 0;//屏幕宽度
 
-    String search = "";//查询json
+    Map<String, Object> conditionMap = new HashMap<>();
 
     /**
      * 获得adapter
@@ -146,7 +148,7 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
 
     public void loadData(final Integer page) {
         if (Constent.ONLINE) {
-            getP().loadData(page, search);
+            getP().loadData(page, conditionMap);
         } else {
             getP().loadNativeData(page);
         }

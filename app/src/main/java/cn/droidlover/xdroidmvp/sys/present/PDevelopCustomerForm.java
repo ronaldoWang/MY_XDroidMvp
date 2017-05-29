@@ -67,13 +67,17 @@ public class PDevelopCustomerForm extends XPresent<DevelopCustomerFormEditActivi
 
                     @Override
                     public void onNext(DevelopCustomerModel developCustomerModel) {
-                        LoadingDialog.cancelDialogForLoading();
                         if (developCustomerModel.isSuccess()) {
                             ToastUtils.showShortToast(developCustomerModel.getMessage());
                             Router.pop(getV());
                         } else {
                             ToastUtils.showShortToast(developCustomerModel.getMessage());
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LoadingDialog.cancelDialogForLoading();
                     }
                 });
     }

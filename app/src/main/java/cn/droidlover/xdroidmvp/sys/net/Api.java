@@ -8,10 +8,11 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class Api {
     public static final String API_BASE_URL = "http://gank.io/api/";
-    public static final String API_USER = "http://169.254.145.206:8080/jupai/";//http://jupai168.duapp.com/
+    //public static final String API_USER = "http://169.254.145.206:8080/jupai/";
+    public static final String API_USER = "http://jupai168.duapp.com/";
 
     private static UserService userService;
-    private static DevelopCustomerService mainService;
+    private static DevelopCustomerService developCustomerService;
 
     public static UserService getUserService() {
         if (userService == null) {
@@ -25,14 +26,14 @@ public class Api {
     }
 
     public static DevelopCustomerService getDevelopCustomerService() {
-        if (mainService == null) {
+        if (developCustomerService == null) {
             synchronized (Api.class) {
-                if (mainService == null) {
-                    mainService = XApi.getInstance().getRetrofit(API_USER, true).create(DevelopCustomerService.class);
+                if (developCustomerService == null) {
+                    developCustomerService = XApi.getInstance().getRetrofit(API_USER, true).create(DevelopCustomerService.class);
                 }
             }
         }
-        return mainService;
+        return developCustomerService;
     }
 
 }

@@ -16,8 +16,8 @@ public class UserModel extends BaseModel<UserModel.User> implements IModel {
 
     @Table("T_USER")
     public static class User {
-        @PrimaryKey(AssignType.AUTO_INCREMENT)
-        private Integer id;
+        @PrimaryKey(AssignType.BY_MYSELF)
+        private String id;
         @NotNull
         @Column("login_name")
         private String loginName;
@@ -27,11 +27,11 @@ public class UserModel extends BaseModel<UserModel.User> implements IModel {
         @Column("create_date")
         private String createDate;
 
-        public Integer getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(Integer id) {
+        public void setId(String id) {
             this.id = id;
         }
 
