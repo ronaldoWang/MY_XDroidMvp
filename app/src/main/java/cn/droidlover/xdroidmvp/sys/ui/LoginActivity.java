@@ -107,12 +107,12 @@ public class LoginActivity extends XActivity<PUser> {
             sharedPref.putBoolean("isChecked", false);
         }
         sharedPref.put("curUser", user);//设置当前登陆人
-//        Router.newIntent(context)
-//                .to(MainActivity.class)    //to()指定目标context
-//                .launch();
         Router.newIntent(context)
-                .to(DevelopCustomerActivity.class)    //to()指定目标context
+                .to(MainActivity.class)    //to()指定目标context
                 .launch();
+//        Router.newIntent(context)
+//                .to(DevelopCustomerActivity.class)    //to()指定目标context
+//                .launch();
         context.finish();
     }
 }

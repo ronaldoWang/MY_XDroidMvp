@@ -1,7 +1,12 @@
 package cn.droidlover.xdroidmvp.sys.ui;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.blankj.utilcode.util.ScreenUtils;
@@ -22,6 +27,7 @@ import cn.droidlover.xdroidmvp.sys.adapter.DevelopCustomerFragmentAdapter;
 import cn.droidlover.xdroidmvp.sys.model.DevelopCustomerModel;
 import cn.droidlover.xdroidmvp.sys.model.common.Constent;
 import cn.droidlover.xdroidmvp.sys.present.PDevelopCustomer;
+import cn.droidlover.xdroidmvp.sys.widget.StatusBarCompat;
 import cn.droidlover.xdroidmvp.sys.widget.XCSlideView;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
@@ -34,9 +40,12 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
     @BindView(R.id.contentLayout)
     XRecyclerContentLayout contentLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     DevelopCustomerFragmentAdapter adapter;
 
-    XCSlideView mSlideViewRight;//搜索侧滑框
+    XCSlideView mSlideViewLeft;//搜索侧滑框
     int mScreenWidth = 0;//屏幕宽度
 
     Map<String, Object> conditionMap = new HashMap<>();
@@ -141,9 +150,28 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
     public void initView(Bundle bundle) {
         mScreenWidth = ScreenUtils.getScreenWidth();
         View menuViewLeft = LayoutInflater.from(context).inflate(R.layout.layout_slideview, null);
-        mSlideViewRight = XCSlideView.create(this.getActivity(), XCSlideView.Positon.LEFT);
-        mSlideViewRight.setMenuView(this.getActivity(), menuViewLeft);
-        mSlideViewRight.setMenuWidth(mScreenWidth * 7 / 9);
+        mSlideViewLeft = XCSlideView.create(this.getActivity(), XCSlideView.Positon.LEFT);
+        mSlideViewLeft.setMenuView(this.getActivity(), menuViewLeft);
+        mSlideViewLeft.setMenuWidth(mScreenWidth * 7 / 9);
+
+        //加载Toolbar
+        setHasOptionsMenu(true);
+        StatusBarCompat.translucentStatusBar(getActivity());
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.search:
+                        if (!mSlideViewLeft.isShow())
+                            mSlideViewLeft.show();
+                        else
+                            mSlideViewLeft.dismiss();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void loadData(final Integer page) {
@@ -152,6 +180,21 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
         } else {
             getP().loadNativeData(page);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Router.pop(context);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_list, menu);
     }
 
     @Override

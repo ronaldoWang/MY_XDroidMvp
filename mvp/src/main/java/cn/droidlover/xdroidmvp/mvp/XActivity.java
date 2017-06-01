@@ -65,6 +65,10 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
         return p;
     }
 
+    public void initView(Bundle savedInstanceState) {
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -15,34 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.sys.R;
-import cn.droidlover.xdroidmvp.sys.widget.StatusBarCompat;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import cn.droidlover.xdroidmvp.sys.R;
 
 public class MainActivity extends XActivity {
-    private AlphaTabsIndicator alphaTabsIndicator;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    AlphaTabsIndicator alphaTabsIndicator;//底部导航
     @BindView(R.id.mViewPager)
     ViewPager mViewPager;
 
     @Override
     public void initView(Bundle bundle) {
-
-    }
-
-    @Override
-    public void initData(Bundle savedInstanceState) {
-        setSupportActionBar(toolbar);
-        StatusBarCompat.translucentStatusBar(this);
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mainAdapter);
         mViewPager.addOnPageChangeListener(mainAdapter);
 
         alphaTabsIndicator = (AlphaTabsIndicator) findViewById(R.id.alphaIndicator);
         alphaTabsIndicator.setViewPager(mViewPager);
+    }
 
+    @Override
+    public void initData(Bundle savedInstanceState) {
         alphaTabsIndicator.getTabView(0).showNumber(6);
         alphaTabsIndicator.getTabView(1).showNumber(888);
         alphaTabsIndicator.getTabView(2).showNumber(88);
