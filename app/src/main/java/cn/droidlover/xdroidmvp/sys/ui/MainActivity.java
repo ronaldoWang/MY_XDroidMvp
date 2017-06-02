@@ -27,7 +27,7 @@ public class MainActivity extends XActivity {
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mainAdapter);
         mViewPager.addOnPageChangeListener(mainAdapter);
-
+        mViewPager.setOffscreenPageLimit(3);
         alphaTabsIndicator = (AlphaTabsIndicator) findViewById(R.id.alphaIndicator);
         alphaTabsIndicator.setViewPager(mViewPager);
     }

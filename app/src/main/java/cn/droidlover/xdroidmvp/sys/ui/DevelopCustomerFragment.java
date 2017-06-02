@@ -142,7 +142,6 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        initAdapter();
         loadData(1);
     }
 
@@ -172,6 +171,8 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
                 return true;
             }
         });
+
+        initAdapter();
     }
 
     public void loadData(final Integer page) {
