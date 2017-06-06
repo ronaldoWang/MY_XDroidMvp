@@ -200,7 +200,7 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_base_pager;
+        return R.layout.fragment_main;
     }
 
     @Override
