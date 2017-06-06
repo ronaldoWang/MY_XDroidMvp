@@ -1,6 +1,10 @@
 package cn.droidlover.xdroidmvp.sys.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -42,6 +46,10 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
     XRecyclerContentLayout contentLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
     DevelopCustomerFragmentAdapter adapter;
 
@@ -149,13 +157,13 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
     public void initView(Bundle bundle) {
         mScreenWidth = ScreenUtils.getScreenWidth();
         View menuViewLeft = LayoutInflater.from(context).inflate(R.layout.layout_slideview, null);
-        mSlideViewLeft = XCSlideView.create(this.getActivity(), XCSlideView.Positon.LEFT);
+        mSlideViewLeft = XCSlideView.create(this.getActivity(), XCSlideView.Positon.RIGHT);
         mSlideViewLeft.setMenuView(this.getActivity(), menuViewLeft);
         mSlideViewLeft.setMenuWidth(mScreenWidth * 7 / 9);
 
         //加载Toolbar
         setHasOptionsMenu(true);
-        StatusBarCompat.translucentStatusBar(getActivity());
+        //StatusBarCompat.translucentStatusBar(getActivity());
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -169,6 +177,25 @@ public class DevelopCustomerFragment extends XFragment<PDevelopCustomer> {
                         break;
                 }
                 return true;
+            }
+        });
+
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerToggle.syncState();//初始化状态
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                String string = null;
+                switch (id) {
+                    case R.id.menu_sbzl:
+                        string = "我";
+                        break;
+                }
+                return false;
             }
         });
 
