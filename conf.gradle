@@ -52,7 +52,8 @@ ext {
             "alphatabs"                  : "com.yinglan.alphatabs:library:1.0.3",
             "tabview"                    : "com.ycl.tabview.library:tabviewlibrary:1.0",
             "fastjson"                   : "com.alibaba:fastjson:1.2.31",
-            "ui-form"                    : "com.github.rey5137:material:1.2.4"
+            "ui-form"                    : "com.github.rey5137:material:1.2.4",
+            "tree-view"                  : "com.github.bmelnychuk:atv:1.2.+"
     ]
 
 }

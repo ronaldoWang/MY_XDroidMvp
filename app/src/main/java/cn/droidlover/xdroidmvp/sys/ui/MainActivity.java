@@ -34,10 +34,10 @@ public class MainActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        alphaTabsIndicator.getTabView(0).showNumber(6);
-        alphaTabsIndicator.getTabView(1).showNumber(888);
-        alphaTabsIndicator.getTabView(2).showNumber(88);
-        alphaTabsIndicator.getTabView(3).showPoint();
+//        alphaTabsIndicator.getTabView(0).showNumber(6);
+//        alphaTabsIndicator.getTabView(1).showNumber(888);
+//        alphaTabsIndicator.getTabView(2).showNumber(88);
+//        alphaTabsIndicator.getTabView(3).showPoint();
     }
 
     private class MainAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
@@ -48,6 +48,7 @@ public class MainActivity extends XActivity {
             super(fm);
             fragments.add(DevelopCustomerFragment.newInstance());
             fragments.add(SearchFragment.newInstance());
+            fragments.add(WorkFragment.newInstance());
             fragments.add(ProjectFragment.newInstance());
             fragments.add(UserFragment.newInstance());
         }
