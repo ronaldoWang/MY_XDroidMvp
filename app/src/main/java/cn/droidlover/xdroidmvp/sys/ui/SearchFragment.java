@@ -1,16 +1,11 @@
 package cn.droidlover.xdroidmvp.sys.ui;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -29,13 +24,50 @@ import cn.droidlover.xdroidmvp.sys.ui.tree.holder.ProfileHolder;
 public class SearchFragment extends XFragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
-
     private AndroidTreeView tView;
 
-    private View rootView;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        final ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.container);
+        final TreeNode root = TreeNode.root();
+
+        TreeNode myProfile = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "My Profile")).setViewHolder(new ProfileHolder(getActivity()));
+        TreeNode bruce = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Bruce Wayne")).setViewHolder(new ProfileHolder(getActivity()));
+        TreeNode clark = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Clark Kent")).setViewHolder(new ProfileHolder(getActivity()));
+        TreeNode barry = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Barry Allen")).setViewHolder(new ProfileHolder(getActivity()));
+
+        addProfileData(myProfile);
+        addProfileData(clark);
+        addProfileData(bruce);
+        addProfileData(barry);
+
+
+        root.addChildren(myProfile, bruce, barry, clark);
+
+        tView = new AndroidTreeView(getActivity(), root);
+        tView.setDefaultAnimation(true);
+        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+        tView.setDefaultNodeClickListener(nodeClickListener);
+        tView.setDefaultViewHolder(IconTreeItemHolder.class);
+        containerView.addView(tView.getView());
+
+        if (savedInstanceState != null) {
+            String state = savedInstanceState.getString("tState");
+            if (!TextUtils.isEmpty(state)) {
+                tView.restoreState(state);
+            }
+        }
+
+        return rootView;
+    }
+
+    private void addProfileData(TreeNode profile) {
+        TreeNode socialNetworks = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_people, "Social")).setViewHolder(new HeaderHolder(getActivity()));
+        TreeNode places = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_place, "Places")).setViewHolder(new HeaderHolder(getActivity()));
+
+        profile.addChildren(socialNetworks, places);
+    }
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -44,27 +76,16 @@ public class SearchFragment extends XFragment {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        final TreeNode root = TreeNode.root();
-        TreeNode myProfile = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.mipmap.ic_menu_archive, "设备材料")).setViewHolder(new ProfileHolder(getActivity()));
-        TreeNode socialNetworks = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.mipmap.ic_menu_archive, "电缆设备材料")).setViewHolder(new HeaderHolder(getActivity()));
-        TreeNode places = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.mipmap.ic_menu_archive, "土建设施材料")).setViewHolder(new HeaderHolder(getActivity()));
-        myProfile.addChildren(socialNetworks, places);
-        root.addChildren(myProfile);
-        tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
-
-        final ViewGroup containerView = (ViewGroup) rootView.findViewById(R.id.tree_menu);
-        containerView.addView(tView.getView());
-
-
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerToggle.syncState();//初始化状态
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
 
     }
+
+    private TreeNode.TreeNodeClickListener nodeClickListener = new TreeNode.TreeNodeClickListener() {
+        @Override
+        public void onClick(TreeNode node, Object value) {
+            IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
+
+        }
+    };
 
     @Override
     public int getLayoutId() {

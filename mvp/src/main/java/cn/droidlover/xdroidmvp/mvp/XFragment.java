@@ -26,7 +26,7 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
     private VDelegate vDelegate;
     private P p;
     protected Activity context;
-    private View rootView;
+    protected View rootView;
     protected LayoutInflater layoutInflater;
 
     private RxPermissions rxPermissions;

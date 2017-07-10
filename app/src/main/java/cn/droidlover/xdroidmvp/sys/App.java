@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
-import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.github.johnkil.print.PrintConfig;
 
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.NetProvider;
@@ -26,6 +26,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        PrintConfig.initDefault(getAssets(), "fonts/material-icon-font.ttf");
         context = this;
         Utils.init(context);
         TypefaceProvider.registerDefaultIconSets();
