@@ -59,6 +59,7 @@ public class SearchFragment extends XFragment {
             }
         }
 
+
         return rootView;
     }
 
