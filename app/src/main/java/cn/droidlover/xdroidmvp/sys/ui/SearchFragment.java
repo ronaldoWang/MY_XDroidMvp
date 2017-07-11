@@ -12,7 +12,9 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
+import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
+import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquActivity;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.HeaderHolder;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.IconTreeItemHolder;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.ProfileHolder;
@@ -84,7 +86,9 @@ public class SearchFragment extends XFragment {
         @Override
         public void onClick(TreeNode node, Object value) {
             IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
-
+            Router.newIntent(context)        //context表示当前上下文
+                    .to(DlCableEquActivity.class)    //to()指定目标context
+                    .launch();
         }
     };
 
