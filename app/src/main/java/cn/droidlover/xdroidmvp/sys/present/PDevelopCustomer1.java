@@ -36,7 +36,7 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -44,7 +44,7 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
                         if (developCustomerModel.isSuccess()) {
                             getV().showData(page, developCustomerModel.getData());
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
 
@@ -70,7 +70,7 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -78,7 +78,7 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
                         if (developCustomerModel.isSuccess()) {
                             getV().loadData(1);
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
 
@@ -114,7 +114,7 @@ public class PDevelopCustomer1 extends XPresent<DevelopCustomerActivity> {
         if (flag) {
             getV().loadData(1);
         } else {
-            ToastUtils.showShortToast(getV().getResources().getString(R.string.cancel_fail));
+            ToastUtils.showShortSafe(getV().getResources().getString(R.string.cancel_fail));
         }
     }
 }

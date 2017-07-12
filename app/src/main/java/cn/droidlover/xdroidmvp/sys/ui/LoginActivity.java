@@ -69,11 +69,11 @@ public class LoginActivity extends XActivity<PUser> {
         userName = et_userName.getText().toString();
         userPwd = et_userPwd.getText().toString();
         if (StringUtils.isTrimEmpty(userName)) {
-            ToastUtils.showLongToast("用户名不能为空");
+            ToastUtils.showShortSafe("用户名不能为空");
             return;
         }
         if (StringUtils.isTrimEmpty(userPwd)) {
-            ToastUtils.showLongToast("密码不能为空");
+            ToastUtils.showShortSafe("密码不能为空");
             return;
         }
         LoadingDialog.showDialogForLoading(context);

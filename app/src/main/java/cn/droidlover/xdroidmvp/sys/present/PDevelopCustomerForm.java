@@ -31,7 +31,7 @@ public class PDevelopCustomerForm extends XPresent<DevelopCustomerFormEditActivi
                 .subscribe(new ApiSubscriber<DevelopCustomerModel>() {
                     @Override
                     protected void onFail(NetError error) {
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -41,7 +41,7 @@ public class PDevelopCustomerForm extends XPresent<DevelopCustomerFormEditActivi
                                 getV().showData(developCustomerModel.getData().get(0));
                             }
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
                 });
@@ -62,16 +62,16 @@ public class PDevelopCustomerForm extends XPresent<DevelopCustomerFormEditActivi
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast("保存失败");
+                        ToastUtils.showShortSafe("保存失败");
                     }
 
                     @Override
                     public void onNext(DevelopCustomerModel developCustomerModel) {
                         if (developCustomerModel.isSuccess()) {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                             Router.pop(getV());
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
 

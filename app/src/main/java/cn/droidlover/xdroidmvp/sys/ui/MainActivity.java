@@ -98,7 +98,7 @@ public class MainActivity extends XActivity {
             case KeyEvent.KEYCODE_BACK:
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
-                    ToastUtils.showShortToast("再按一次退出");
+                    ToastUtils.showShortSafe("再按一次退出");
                     firstTime = secondTime;
                 } else {//完全退出
                     moveTaskToBack(false);//应用退到后台

@@ -33,7 +33,7 @@ public class PDlCableEqu extends XPresent<DlCableEquActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -41,7 +41,7 @@ public class PDlCableEqu extends XPresent<DlCableEquActivity> {
                         if (model.isSuccess()) {
                             getV().showData(page, model.getData());
                         } else {
-                            ToastUtils.showShortToast(model.getMessage());
+                            ToastUtils.showShortSafe(model.getMessage());
                         }
                     }
 

@@ -29,7 +29,7 @@ public class PDevelopCustomerFormView extends XPresent<DevelopCustomerFormViewAc
                 .subscribe(new ApiSubscriber<DevelopCustomerModel>() {
                     @Override
                     protected void onFail(NetError error) {
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -39,7 +39,7 @@ public class PDevelopCustomerFormView extends XPresent<DevelopCustomerFormViewAc
                                 getV().showData(developCustomerModel.getData().get(0));
                             }
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
                 });
@@ -53,7 +53,7 @@ public class PDevelopCustomerFormView extends XPresent<DevelopCustomerFormViewAc
     public void queryNativeOne(final String id) {
         DevelopCustomerModel.DevelopCustomer data = OrmLiteManager.queryById(getV(), DevelopCustomerModel.DevelopCustomer.class, id);
         if (null == data) {
-            ToastUtils.showShortToast("未查询到数据");
+            ToastUtils.showShortSafe("未查询到数据");
         } else {
             getV().showData(data);
         }

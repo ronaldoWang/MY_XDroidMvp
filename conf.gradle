@@ -47,7 +47,7 @@ ext {
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
 
             "junit"                      : "junit:junit:4.12",
-            "utilcode"                   : "com.blankj:utilcode:1.4.0",
+            "utilcode"                   : "com.blankj:utilcode:1.7.1",
             "androidbootstrap"           : "com.beardedhen:androidbootstrap:2.3.1",
             "alphatabs"                  : "com.yinglan.alphatabs:library:1.0.3",
             "tabview"                    : "com.ycl.tabview.library:tabviewlibrary:1.0",

@@ -31,7 +31,7 @@ public class PDevelopCustomer extends XPresent<DevelopCustomerFragment> {
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -39,7 +39,7 @@ public class PDevelopCustomer extends XPresent<DevelopCustomerFragment> {
                         if (developCustomerModel.isSuccess()) {
                             getV().showData(page, developCustomerModel.getData());
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
 
@@ -60,7 +60,7 @@ public class PDevelopCustomer extends XPresent<DevelopCustomerFragment> {
                     @Override
                     protected void onFail(NetError error) {
                         LoadingDialog.cancelDialogForLoading();
-                        ToastUtils.showShortToast(error.getMessage());
+                        ToastUtils.showShortSafe(error.getMessage());
                     }
 
                     @Override
@@ -69,7 +69,7 @@ public class PDevelopCustomer extends XPresent<DevelopCustomerFragment> {
                         if (developCustomerModel.isSuccess()) {
                             getV().loadData(1);
                         } else {
-                            ToastUtils.showShortToast(developCustomerModel.getMessage());
+                            ToastUtils.showShortSafe(developCustomerModel.getMessage());
                         }
                     }
                 });
