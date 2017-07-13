@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -45,11 +46,11 @@ public class RightSideslipLay extends RelativeLayout {
 
     private void inflateView() {
         View.inflate(getContext(), R.layout.include_right_sideslip_layout, this);
-        selectList = (ListView) findViewById(R.id.selsectFrameLV);
-        backBrand = (ImageView) findViewById(R.id.select_brand_back_im);
-        resetBrand = (Button) findViewById(R.id.fram_reset_but);
+        selectList = (ListView) findViewById(R.id.selsectFrameLV);//list列表
+        backBrand = (ImageView) findViewById(R.id.select_brand_back_im);//返回
+        resetBrand = (Button) findViewById(R.id.fram_reset_but);//重置
         mRelateLay = (RelativeLayout) findViewById(R.id.select_frame_lay);
-        okBrand = (Button) findViewById(R.id.fram_ok_but);
+        okBrand = (Button) findViewById(R.id.fram_ok_but);//确定
         resetBrand.setOnClickListener(mOnClickListener);
         okBrand.setOnClickListener(mOnClickListener);
         backBrand.setOnClickListener(mOnClickListener);
@@ -80,7 +81,7 @@ public class RightSideslipLay extends RelativeLayout {
         slidLayFrameAdapter.setAttrCallBack(new RightSideslipLayAdapter.SelechDataCallBack() {
             @Override
             public void setupAttr(List<String> mSelectData, String key) {
-
+                ToastUtils.showShortSafe(key);
             }
         });
 

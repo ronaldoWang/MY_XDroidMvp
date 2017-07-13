@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.FragmentUtils;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
-import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquActivity;
+import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquFragment;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.RightSideslipLay;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.HeaderHolder;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.IconTreeItemHolder;
@@ -32,7 +32,6 @@ import cn.droidlover.xdroidmvp.sys.ui.tree.holder.ProfileHolder;
 public class SearchFragment extends XFragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private AndroidTreeView tView;
 
     @BindView(R.id.main_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -42,6 +41,8 @@ public class SearchFragment extends XFragment {
 
     @BindView(R.id.main_right_drawer_layout)
     RelativeLayout rightMessagelayout;
+
+    AndroidTreeView tView;//菜单视图
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class SearchFragment extends XFragment {
 
     private void initRightLayout() {
         //View view = getActivity().getLayoutInflater().inflate(R.layout.xiaoxi_layout, null);
+        rightMessagelayout.removeAllViews();
         RightSideslipLay menuHeaderView = new RightSideslipLay(getActivity());
         rightMessagelayout.addView(menuHeaderView);
 
@@ -89,16 +91,15 @@ public class SearchFragment extends XFragment {
 
         final TreeNode root = TreeNode.root();
 
-        TreeNode sbzl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "设备资料")).setViewHolder(new ProfileHolder(getActivity()));
-        TreeNode xsjl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "巡视记录")).setViewHolder(new ProfileHolder(getActivity()));
+        TreeNode sbzl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "设备资料", null)).setViewHolder(new ProfileHolder(getActivity()));
+        TreeNode xsjl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "巡视记录", null)).setViewHolder(new ProfileHolder(getActivity()));
         //TreeNode clark = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Clark Kent")).setViewHolder(new ProfileHolder(getActivity()));
         //TreeNode barry = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_person, "Barry Allen")).setViewHolder(new ProfileHolder(getActivity()));
 
 
-        TreeNode dlsbzl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_people, "电缆设备资料")).setViewHolder(new HeaderHolder(getActivity()));
-        TreeNode tjsszl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_place, "土鉴设施资料")).setViewHolder(new HeaderHolder(getActivity()));
+        TreeNode dlsbzl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_people, "电缆设备资料", "sbzl_dlsbzl")).setViewHolder(new HeaderHolder(getActivity()));
+        TreeNode tjsszl = new TreeNode(new IconTreeItemHolder.IconTreeItem(R.string.ic_place, "土鉴设施资料", "sbzl_tjsszl")).setViewHolder(new HeaderHolder(getActivity()));
         sbzl.addChildren(dlsbzl, tjsszl);
-
 
         root.addChildren(sbzl, xsjl);
 
@@ -112,63 +113,42 @@ public class SearchFragment extends XFragment {
     }
 
     private void initEvent() {
-
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-
             @Override
             public void onDrawerStateChanged(int arg0) {
-                // TODO Auto-generated method stub
             }
 
             @Override
             public void onDrawerSlide(View arg0, float arg1) {
-
             }
 
             @Override
             public void onDrawerOpened(View arg0) {
-                // TODO Auto-generated method stub
-
             }
 
             @Override
             public void onDrawerClosed(View arg0) {
-                // TODO Auto-generated method stub
-
             }
         });
 
     }
 
     //左边菜单开关事件
-
     public void openLeftLayout() {
-
         if (mDrawerLayout.isDrawerOpen(leftMenulayout)) {
-
             mDrawerLayout.closeDrawer(leftMenulayout);
-
         } else {
-
             mDrawerLayout.openDrawer(leftMenulayout);
         }
-
     }
 
     // 右边菜单开关事件
-
     public void openRightLayout() {
-
         if (mDrawerLayout.isDrawerOpen(rightMessagelayout)) {
-
             mDrawerLayout.closeDrawer(rightMessagelayout);
-
         } else {
-
             mDrawerLayout.openDrawer(rightMessagelayout);
-
         }
-
     }
 
     @Override
@@ -181,9 +161,12 @@ public class SearchFragment extends XFragment {
         @Override
         public void onClick(TreeNode node, Object value) {
             IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
-            Router.newIntent(context)        //context表示当前上下文
-                    .to(DlCableEquActivity.class)    //to()指定目标context
-                    .launch();
+            String url = item.url;
+            if ("sbzl_dlsbzl".equals(url)) {
+                FragmentUtils.replaceFragment(getActivity().getSupportFragmentManager(), new DlCableEquFragment(), R.id.main_content_frame, true);
+
+            }
+            openLeftLayout();//点击菜单自动收缩左边
         }
     };
 

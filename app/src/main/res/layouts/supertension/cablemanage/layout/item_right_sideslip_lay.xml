@@ -29,12 +29,12 @@
             android:id="@+id/item_selectTv"
             android:layout_width="260px"
             android:layout_height="match_parent"
+            android:drawablePadding="3px"
             android:ellipsize="end"
             android:gravity="right|center_vertical"
             android:singleLine="true"
-            android:drawablePadding="3px"
             android:textColor="#fb4747"
-            android:textSize="20px" />
+            android:textSize="20px"/>
 
     </LinearLayout>
 

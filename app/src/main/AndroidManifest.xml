@@ -29,8 +29,6 @@
         <activity android:name=".ui.LoginActivity"/>
         <activity android:name=".ui.DevelopCustomerFormViewActivity"/>
         <activity android:name=".ui.DevelopCustomerActivity"/>
-        <activity android:name=".ui.supertension.cablemanage.DlCableEquActivity">
-        </activity>
     </application>
 
 </manifest>

@@ -122,7 +122,8 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
         List<String> mSelectData = new ArrayList<String>();
         if (data != null) {
             for (int i = 0; i < data.size(); i++) {
-                mSelectData.add(data.get(i).getV());
+                //mSelectData.add(data.get(i).getV());
+                mSelectData.add(data.get(i).getK());//返回key
             }
             return mSelectData;
         } else {

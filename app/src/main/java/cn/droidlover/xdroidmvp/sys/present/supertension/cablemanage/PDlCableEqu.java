@@ -10,14 +10,14 @@ import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
 import cn.droidlover.xdroidmvp.sys.model.supertension.cablemanage.DlCableEquModel;
 import cn.droidlover.xdroidmvp.sys.net.Api;
-import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquActivity;
+import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquFragment;
 import cn.droidlover.xdroidmvp.sys.widget.LoadingDialog;
 
 /**
  * Created by haoxi on 2017/7/11.
  */
 
-public class PDlCableEqu extends XPresent<DlCableEquActivity> {
+public class PDlCableEqu extends XPresent<DlCableEquFragment> {
     /**
      * 在线加载数据
      *

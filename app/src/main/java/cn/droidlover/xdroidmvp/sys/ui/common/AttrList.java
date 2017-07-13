@@ -22,6 +22,8 @@ public class AttrList implements Serializable {
     public static class Attr implements Serializable {
         //属性值的title
         private String key;
+        //属性值的value
+        private String value;
         //属性值的title对应的数据
         private List<Vals> vals;
         //设置选中的数据
@@ -67,6 +69,10 @@ public class AttrList implements Serializable {
             return key;
         }
 
+        public String getValue() {
+            return value;
+        }
+
         public void setKey(String key) {
             this.key = key;
         }
@@ -74,6 +80,7 @@ public class AttrList implements Serializable {
 
         public static class Vals implements Serializable {
             private String val;
+            private String key;
             private boolean isChick;
 
             public boolean isChick() {
@@ -86,6 +93,10 @@ public class AttrList implements Serializable {
 
             public String getV() {
                 return val;
+            }
+
+            public String getK() {
+                return key;
             }
 
             public void setV(String v) {

@@ -1,12 +1,6 @@
 package cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage;
 
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.util.HashMap;
@@ -15,7 +9,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
-import cn.droidlover.xdroidmvp.mvp.XActivity;
+import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
 import cn.droidlover.xdroidmvp.sys.adapter.supertension.cablemanage.DlCableEquAdapter;
@@ -26,37 +20,16 @@ import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
-import static cn.droidlover.xdroidmvp.sys.R.id.drawer_layout;
-
-public class DlCableEquActivity extends XActivity<PDlCableEqu> {
+public class DlCableEquFragment extends XFragment<PDlCableEqu> {
 
     @BindView(R.id.contentLayout)
     XRecyclerContentLayout contentLayout;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(drawer_layout)
-    DrawerLayout drawer;
     DlCableEquAdapter adapter;
     Map<String, Object> conditionMap = new HashMap<>();
 
     @Override
     public void initView(Bundle bundle) {
         initAdapter();
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.search:
-                        drawer.openDrawer(GravityCompat.END);
-                        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,
-                                Gravity.END);    //解除锁定
-                        break;
-                }
-                return true;
-            }
-        });
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.END);
     }
 
     @Override
@@ -133,22 +106,6 @@ public class DlCableEquActivity extends XActivity<PDlCableEqu> {
             });
         }
         return adapter;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Router.pop(context);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-        return true;
     }
 
     @Override

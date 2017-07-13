@@ -58,16 +58,18 @@ public class IconTreeItemHolder extends TreeNode.BaseNodeViewHolder<IconTreeItem
 
     @Override
     public void toggle(boolean active) {
-       // arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        // arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
     }
 
     public static class IconTreeItem {
         public int icon;
         public String text;
+        public String url;
 
-        public IconTreeItem(int icon, String text) {
+        public IconTreeItem(int icon, String text, String url) {
             this.icon = icon;
             this.text = text;
+            this.url = url;
         }
     }
 }
