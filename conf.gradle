@@ -45,15 +45,14 @@ ext {
 
             "canary-debug"               : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
             "canary-release"             : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
-
             "junit"                      : "junit:junit:4.12",
             "utilcode"                   : "com.blankj:utilcode:1.7.1",
             "androidbootstrap"           : "com.beardedhen:androidbootstrap:2.3.1",
-            "alphatabs"                  : "com.yinglan.alphatabs:library:1.0.3",
-            "tabview"                    : "com.ycl.tabview.library:tabviewlibrary:1.0",
             "fastjson"                   : "com.alibaba:fastjson:1.2.31",
             "ui-form"                    : "com.github.rey5137:material:1.2.4",
-            "tree-view"                  : "com.github.bmelnychuk:atv:1.2.+"
+            "tree-view"                  : "com.github.bmelnychuk:atv:1.2.+",
+            "tablayout"                  : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
+            "print"                      : "com.github.johnkil.print:print:1.2.2"
     ]
 
 }

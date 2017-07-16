@@ -12,7 +12,7 @@ public class Api {
     //public static final String API_USER = "http://169.254.145.206:8080/jupai/";
     //public static final String API_USER = "http://jupai168.duapp.com/";
     // public static final String API_USER = "http://130.252.102.226:8090/2014001/";
-    public static final String API_USER = "http://192.168.0.105:8080/2014001/";
+    public static final String API_USER = "http://192.168.0.104:8080/2014001/";
 
     private static UserService userService;
     private static DevelopCustomerService developCustomerService;

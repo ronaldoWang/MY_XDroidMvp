@@ -13,12 +13,18 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.sys.R;
+import cn.droidlover.xdroidmvp.sys.event.supertension.SearchEvent;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquFragment;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.RightSideslipLay;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.HeaderHolder;
@@ -81,8 +87,20 @@ public class SearchFragment extends XFragment {
         //View view = getActivity().getLayoutInflater().inflate(R.layout.xiaoxi_layout, null);
         rightMessagelayout.removeAllViews();
         RightSideslipLay menuHeaderView = new RightSideslipLay(getActivity());
-        rightMessagelayout.addView(menuHeaderView);
+        menuHeaderView.setCloseMenuCallBack(new RightSideslipLay.CloseMenuCallBack() {
+            @Override
+            public void setupCloseMean() {
+                openRightLayout();
+            }
+        });
 
+        menuHeaderView.setDoSearchCallBack(new RightSideslipLay.DoSearchCallBack() {
+            @Override
+            public void doSearch(Map<String, List> searchMap) {
+                BusProvider.getBus().post(new SearchEvent(searchMap));
+            }
+        });
+        rightMessagelayout.addView(menuHeaderView);
     }
 
     private void initLeftLayout() {
@@ -162,6 +180,9 @@ public class SearchFragment extends XFragment {
         public void onClick(TreeNode node, Object value) {
             IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
             String url = item.url;
+            if(StringUtils.isEmpty(url)){
+                return;
+            }
             if ("sbzl_dlsbzl".equals(url)) {
                 FragmentUtils.replaceFragment(getActivity().getSupportFragmentManager(), new DlCableEquFragment(), R.id.main_content_frame, true);
 

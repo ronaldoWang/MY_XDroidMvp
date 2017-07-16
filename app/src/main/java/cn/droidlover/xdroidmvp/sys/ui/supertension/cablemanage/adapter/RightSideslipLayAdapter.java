@@ -82,7 +82,7 @@ public class RightSideslipLayAdapter extends SimpleBaseAdapter<AttrList.Attr> {
                 mAttr.setShowStr(setupSelectStr(seachData));
                 mAttr.setSelectVals(seachData);
                 notifyDataSetChanged();
-                selechDataCallBack.setupAttr(setupSelectDataStr(seachData), mAttr.getKey());
+                selechDataCallBack.setupAttr(setupSelectDataStr(seachData), mAttr.getValue());
 
             }
         });

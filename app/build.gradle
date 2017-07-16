@@ -39,14 +39,13 @@ dependencies {
     apt rootProject.ext.dependencies["butterknife-apt"]
     compile rootProject.ext.dependencies["avi-loading"]
     compile project(':mvp')
-    compile rootProject.ext.dependencies["tabview"]
-    compile rootProject.ext.dependencies["alphatabs"]
     compile rootProject.ext.dependencies["androidbootstrap"]
     compile rootProject.ext.dependencies["fastjson"]
     compile rootProject.ext.dependencies["utilcode"]
     compile rootProject.ext.dependencies["ui-form"]
     compile rootProject.ext.dependencies["tree-view"]
-    compile 'com.github.johnkil.print:print:1.2.2'
+    compile rootProject.ext.dependencies["tablayout"]
+    compile rootProject.ext.dependencies["print"]
     compile 'com.android.support:design:23.0.2'
     compile 'com.android.support:support-v4:23.0.2'
     compile 'com.android.support:appcompat-v7:23.0.2'

@@ -12,31 +12,40 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.droidlover.xdroidmvp.sys.R;
 import cn.droidlover.xdroidmvp.sys.ui.common.AttrList;
 import cn.droidlover.xdroidmvp.sys.ui.common.OnClickListenerWrapper;
+import cn.droidlover.xdroidmvp.sys.ui.common.SearchJsonCommon;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.adapter.RightSideslipLayAdapter;
+import cn.droidlover.xdroidmvp.sys.utils.AssetsJsonReader;
 
 /**
  * 属性选择的布局及逻辑
  */
 public class RightSideslipLay extends RelativeLayout {
     private Context mCtx;
+    private AttrList attr;
     private ListView selectList;
     private Button resetBrand;
     private Button okBrand;
     private ImageView backBrand;
     private RelativeLayout mRelateLay;
     private RightSideslipLayAdapter slidLayFrameAdapter;
-    private String JsonStr = "{\"attr\": [{ \"isoPen\": true,\"single_check\": 0,\"key\": \"品牌\", \"vals\": [ { \"val\": \"雅格\"}, {\"val\": \"志高/Chigo\" }, {\"val\": \"格东方\" },{\"val\": \"Chigo\" }, {\"val\": \"格OW\" },{\"val\": \"志go\" }, {\"val\": \"格LLOW\" },{\"val\": \"志o\" }, {\"val\": \"LLOW\" }, {\"val\": \"众桥\"},{\"val\": \"超人/SID\" },{ \"val\": \"扬子342\" }, { \"val\": \"扬舒服\" }, { \"val\": \"扬子东方\"},{ \"val\": \"荣事达/Royalstar\"}]},{\"single_check\": 0,\"key\": \"是否进口\", \"vals\": [{ \"val\": \"国产\"},{ \"val\": \"进口\"}]}," +
-            "{\"single_check\": 0,\"key\": \"灭蚊器类型\", \"vals\": [{ \"val\": \"光触媒灭蚊器\"}]}," +
-            "{\"single_check\": 0,\"key\": \"个数\", \"vals\": [{\"val\": \"1个\"},{\"val\": \"2个\"},{\"val\": \"3个\"},{\"val\": \"4个\"},{\"val\": \"5个\"},{\"val\": \"5个以上\"},{\"val\": \"10个以上\"}]},{ \"single_check\": 0, \"key\": \"型号\",\"vals\": [{\"val\": \"SI23\" },{\"val\": \"SI23\" },{\"val\": \"SI343\" },{\"val\": \"SI563\" },{\"val\": \"Sgt23\" }]}]}";
+    private List<AttrList.Attr.Vals> ValsData;
+    private Map<String, List> searchMap = new HashMap<>();
+
+    private String JsonStr = "{\"attr\": [{ \"isoPen\": true,\"single_check\": 0,\"key\": \"品牌\", \"vals\": [ { \"val\": \"雅格\"}, {\"val\": \"志高/Chigo\" }, {\"val\": \"格东方\" },{\"val\": \"Chigo\" }, " +
+            "{\"val\": \"格OW\" },{\"val\": \"志go\" }, {\"val\": \"格LLOW\" },{\"val\": \"志o\" },{\"val\": \"LLOW\" }, {\"val\": \"众桥\"},{\"val\": \"超人/SID\" },{ \"val\": \"扬子342\" }, { \"val\": \"扬舒服\" }, " +
+            "{ \"val\": \"扬子东方\"},{ \"val\": \"荣事达/Royalstar\"}]},{\"single_check\": 0,\"key\": \"是否进口\", \"vals\": [{ \"val\": \"国产\"},{ \"val\": \"进口\"}]},{\"single_check\": 0,\"key\": \"灭蚊器类型\", \"vals\": [{ \"val\": \"光触媒灭蚊器\"}]}," +
+            "{\"single_check\": 0,\"key\": \"个数\", \"vals\": [{\"val\": \"1个\"},{\"val\": \"2个\"},{\"val\": \"3个\"},{\"val\": \"4个\"},{\"val\": \"5个\"},{\"val\": \"5个以上\"}," +
+            "{\"val\": \"10个以上\"}]},{ \"single_check\": 0, \"key\": \"型号\",\"vals\": [{\"val\": \"SI23\" },{\"val\": \"SI23\" },{\"val\": \"SI343\" },{\"val\": \"SI563\" },{\"val\": \"Sgt23\" }]}]}";
 
     public RightSideslipLay(Context context) {
         super(context);
@@ -58,8 +67,6 @@ public class RightSideslipLay extends RelativeLayout {
         setUpList();
     }
 
-    private List<AttrList.Attr.Vals> ValsData;
-
     private List<AttrList.Attr> setUpBrandList(List<AttrList.Attr> mAttrList) {
         if ("品牌".equals(mAttrList.get(0).getKey())) {
             ValsData = mAttrList.get(0).getVals();
@@ -68,10 +75,11 @@ public class RightSideslipLay extends RelativeLayout {
         return mAttrList;
     }
 
-    private AttrList attr;
-
     private void setUpList() {
-        attr = new Gson().fromJson(JsonStr.toString(), AttrList.class);
+        attr = new Gson().fromJson(AssetsJsonReader.getJsonString(mCtx, SearchJsonCommon.DlCableEqu), AttrList.class);
+        if (null == attr) {
+            return;
+        }
         if (slidLayFrameAdapter == null) {
             slidLayFrameAdapter = new RightSideslipLayAdapter(mCtx, setUpBrandList(attr.getAttr()));
             selectList.setAdapter(slidLayFrameAdapter);
@@ -80,11 +88,10 @@ public class RightSideslipLay extends RelativeLayout {
         }
         slidLayFrameAdapter.setAttrCallBack(new RightSideslipLayAdapter.SelechDataCallBack() {
             @Override
-            public void setupAttr(List<String> mSelectData, String key) {
-                ToastUtils.showShortSafe(key);
+            public void setupAttr(List mSelectData, String key) {
+                searchMap.put(key, mSelectData);
             }
         });
-
         slidLayFrameAdapter.setMoreCallBack(new RightSideslipLayAdapter.SelechMoreCallBack() {
 
             @Override
@@ -93,7 +100,6 @@ public class RightSideslipLay extends RelativeLayout {
                 mDownMenu.setOnMeanCallBack(meanCallBack);
             }
         });
-
     }
 
     //在第二个页面改变后，返回时第一个界面随之改变，使用的接口回调
@@ -137,9 +143,13 @@ public class RightSideslipLay extends RelativeLayout {
         protected void onSingleClick(View v) {
             switch (v.getId()) {
                 case R.id.fram_reset_but:
+                    slidLayFrameAdapter.replaceAll(attr.getAttr());
+                    break;
                 case R.id.select_brand_back_im:
+                    menuCallBack.setupCloseMean();
                 case R.id.fram_ok_but:
                     menuCallBack.setupCloseMean();
+                    doSearchCallBack.doSearch(searchMap);
                     break;
             }
         }
@@ -192,14 +202,22 @@ public class RightSideslipLay extends RelativeLayout {
         });
     }
 
-
-    private CloseMenuCallBack menuCallBack;
+    private CloseMenuCallBack menuCallBack;//关闭回调
+    private DoSearchCallBack doSearchCallBack;//执行查询回调
 
     public interface CloseMenuCallBack {
         void setupCloseMean();
     }
 
+    public interface DoSearchCallBack {
+        void doSearch(Map<String, List> searchMap);//查询
+    }
+
     public void setCloseMenuCallBack(CloseMenuCallBack menuCallBack) {
         this.menuCallBack = menuCallBack;
+    }
+
+    public void setDoSearchCallBack(DoSearchCallBack doSearchCallBack) {
+        this.doSearchCallBack = doSearchCallBack;
     }
 }
