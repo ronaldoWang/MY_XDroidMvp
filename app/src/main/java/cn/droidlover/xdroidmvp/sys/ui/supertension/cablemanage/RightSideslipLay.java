@@ -22,7 +22,6 @@ import java.util.Map;
 import cn.droidlover.xdroidmvp.sys.R;
 import cn.droidlover.xdroidmvp.sys.ui.common.AttrList;
 import cn.droidlover.xdroidmvp.sys.ui.common.OnClickListenerWrapper;
-import cn.droidlover.xdroidmvp.sys.ui.common.SearchJsonCommon;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.adapter.RightSideslipLayAdapter;
 import cn.droidlover.xdroidmvp.sys.utils.AssetsJsonReader;
 
@@ -40,16 +39,12 @@ public class RightSideslipLay extends RelativeLayout {
     private RightSideslipLayAdapter slidLayFrameAdapter;
     private List<AttrList.Attr.Vals> ValsData;
     private Map<String, List> searchMap = new HashMap<>();
+    private String jsonPath;
 
-    private String JsonStr = "{\"attr\": [{ \"isoPen\": true,\"single_check\": 0,\"key\": \"品牌\", \"vals\": [ { \"val\": \"雅格\"}, {\"val\": \"志高/Chigo\" }, {\"val\": \"格东方\" },{\"val\": \"Chigo\" }, " +
-            "{\"val\": \"格OW\" },{\"val\": \"志go\" }, {\"val\": \"格LLOW\" },{\"val\": \"志o\" },{\"val\": \"LLOW\" }, {\"val\": \"众桥\"},{\"val\": \"超人/SID\" },{ \"val\": \"扬子342\" }, { \"val\": \"扬舒服\" }, " +
-            "{ \"val\": \"扬子东方\"},{ \"val\": \"荣事达/Royalstar\"}]},{\"single_check\": 0,\"key\": \"是否进口\", \"vals\": [{ \"val\": \"国产\"},{ \"val\": \"进口\"}]},{\"single_check\": 0,\"key\": \"灭蚊器类型\", \"vals\": [{ \"val\": \"光触媒灭蚊器\"}]}," +
-            "{\"single_check\": 0,\"key\": \"个数\", \"vals\": [{\"val\": \"1个\"},{\"val\": \"2个\"},{\"val\": \"3个\"},{\"val\": \"4个\"},{\"val\": \"5个\"},{\"val\": \"5个以上\"}," +
-            "{\"val\": \"10个以上\"}]},{ \"single_check\": 0, \"key\": \"型号\",\"vals\": [{\"val\": \"SI23\" },{\"val\": \"SI23\" },{\"val\": \"SI343\" },{\"val\": \"SI563\" },{\"val\": \"Sgt23\" }]}]}";
-
-    public RightSideslipLay(Context context) {
+    public RightSideslipLay(Context context, String jsonPath) {
         super(context);
         mCtx = context;
+        this.jsonPath = jsonPath;
         inflateView();
     }
 
@@ -68,15 +63,15 @@ public class RightSideslipLay extends RelativeLayout {
     }
 
     private List<AttrList.Attr> setUpBrandList(List<AttrList.Attr> mAttrList) {
-        if ("品牌".equals(mAttrList.get(0).getKey())) {
-            ValsData = mAttrList.get(0).getVals();
-            mAttrList.get(0).setVals(getValsDatas(mAttrList.get(0).getVals()));
-        }
+        //if ("品牌".equals(mAttrList.get(0).getKey())) {
+        //    ValsData = mAttrList.get(0).getVals();
+        //    mAttrList.get(0).setVals(getValsDatas(mAttrList.get(0).getVals()));
+        //}
         return mAttrList;
     }
 
     private void setUpList() {
-        attr = new Gson().fromJson(AssetsJsonReader.getJsonString(mCtx, SearchJsonCommon.DlCableEqu), AttrList.class);
+        attr = new Gson().fromJson(AssetsJsonReader.getJsonString(mCtx, jsonPath), AttrList.class);
         if (null == attr) {
             return;
         }

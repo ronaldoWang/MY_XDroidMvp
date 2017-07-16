@@ -14,7 +14,7 @@ import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.router.Router;
 import cn.droidlover.xdroidmvp.sys.R;
 import cn.droidlover.xdroidmvp.sys.adapter.supertension.cablemanage.DlCableEquAdapter;
-import cn.droidlover.xdroidmvp.sys.event.supertension.SearchEvent;
+import cn.droidlover.xdroidmvp.sys.event.supertension.cablemanage.CablemanageEvent;
 import cn.droidlover.xdroidmvp.sys.model.supertension.cablemanage.DlCableEquModel;
 import cn.droidlover.xdroidmvp.sys.present.supertension.cablemanage.PDlCableEqu;
 import cn.droidlover.xdroidmvp.sys.ui.DevelopCustomerFormViewActivity;
@@ -33,15 +33,16 @@ public class DlCableEquFragment extends XFragment<PDlCableEqu> {
     @Override
     public void initView(Bundle bundle) {
         initAdapter();
-        BusProvider.getBus().toFlowable(SearchEvent.class)
-                .subscribe(new Consumer<SearchEvent>() {
+        BusProvider.getBus().toFlowable(CablemanageEvent.class)
+                .subscribe(new Consumer<CablemanageEvent>() {
                     @Override
-                    public void accept(SearchEvent searchEvent) throws Exception {
-                        Map<String, List> searchMap = searchEvent.getSearchMap();
-
-                        conditionMap.put("searchcondition_basicDataByEleId0id_int_eq", Integer.valueOf(searchMap.get("searchcondition_basicDataByEleId0id_int_eq").get(0).toString()));
-
-                        loadData(1);
+                    public void accept(CablemanageEvent cablemanageEvent) throws Exception {
+                        if (cablemanageEvent.getTag().equals(CablemanageEvent.dlCableEquFragment)) {
+                            Map<String, List> searchMap = cablemanageEvent.getSearchMap();
+                            if (!searchMap.isEmpty())
+                                conditionMap.put("searchcondition_basicDataByEleId0id_int_eq", Integer.valueOf(searchMap.get("searchcondition_basicDataByEleId0id_int_eq").get(0).toString()));
+                            loadData(1);
+                        }
                     }
                 });
     }

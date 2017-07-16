@@ -24,7 +24,8 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.sys.R;
-import cn.droidlover.xdroidmvp.sys.event.supertension.SearchEvent;
+import cn.droidlover.xdroidmvp.sys.event.supertension.cablemanage.CablemanageEvent;
+import cn.droidlover.xdroidmvp.sys.ui.common.SearchJsonCommon;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.DlCableEquFragment;
 import cn.droidlover.xdroidmvp.sys.ui.supertension.cablemanage.RightSideslipLay;
 import cn.droidlover.xdroidmvp.sys.ui.tree.holder.HeaderHolder;
@@ -50,6 +51,8 @@ public class SearchFragment extends XFragment {
 
     AndroidTreeView tView;//菜单视图
 
+    static String tag = "";//SearchEventTag
+
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -59,8 +62,6 @@ public class SearchFragment extends XFragment {
     public void initView(Bundle savedInstanceState) {
         initEvent();
         initLeftLayout();
-        initRightLayout();
-
         //加载Toolbar
         setHasOptionsMenu(true);
         //StatusBarCompat.translucentStatusBar(getActivity());
@@ -83,24 +84,26 @@ public class SearchFragment extends XFragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void initRightLayout() {
-        //View view = getActivity().getLayoutInflater().inflate(R.layout.xiaoxi_layout, null);
+    private void initRightLayout(String jsonPath, String tag) {
+        this.tag = tag;
         rightMessagelayout.removeAllViews();
-        RightSideslipLay menuHeaderView = new RightSideslipLay(getActivity());
-        menuHeaderView.setCloseMenuCallBack(new RightSideslipLay.CloseMenuCallBack() {
-            @Override
-            public void setupCloseMean() {
-                openRightLayout();
-            }
-        });
+        if (!StringUtils.isEmpty(jsonPath)) {
+            RightSideslipLay menuHeaderView = new RightSideslipLay(getActivity(), jsonPath);
+            menuHeaderView.setCloseMenuCallBack(new RightSideslipLay.CloseMenuCallBack() {
+                @Override
+                public void setupCloseMean() {
+                    openRightLayout();
+                }
+            });
 
-        menuHeaderView.setDoSearchCallBack(new RightSideslipLay.DoSearchCallBack() {
-            @Override
-            public void doSearch(Map<String, List> searchMap) {
-                BusProvider.getBus().post(new SearchEvent(searchMap));
-            }
-        });
-        rightMessagelayout.addView(menuHeaderView);
+            menuHeaderView.setDoSearchCallBack(new RightSideslipLay.DoSearchCallBack() {
+                @Override
+                public void doSearch(Map<String, List> searchMap) {
+                    BusProvider.getBus().post(new CablemanageEvent(searchMap, SearchFragment.tag));
+                }
+            });
+            rightMessagelayout.addView(menuHeaderView);
+        }
     }
 
     private void initLeftLayout() {
@@ -180,12 +183,12 @@ public class SearchFragment extends XFragment {
         public void onClick(TreeNode node, Object value) {
             IconTreeItemHolder.IconTreeItem item = (IconTreeItemHolder.IconTreeItem) value;
             String url = item.url;
-            if(StringUtils.isEmpty(url)){
+            if (StringUtils.isEmpty(url)) {
                 return;
             }
             if ("sbzl_dlsbzl".equals(url)) {
+                initRightLayout(SearchJsonCommon.DlCableEqu, CablemanageEvent.dlCableEquFragment);
                 FragmentUtils.replaceFragment(getActivity().getSupportFragmentManager(), new DlCableEquFragment(), R.id.main_content_frame, true);
-
             }
             openLeftLayout();//点击菜单自动收缩左边
         }
